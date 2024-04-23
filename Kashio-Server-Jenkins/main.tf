@@ -5,8 +5,8 @@ module "vpc" {
   name = "vpc-kashio"
   cidr = var.vpc_cidr
 
-  azs            = data.aws_availability_zones.azs_kashio.names
-  public_subnets = var.subnets_public
+  azs                     = data.aws_availability_zones.azs_kashio.names
+  public_subnets          = var.subnets_public
   map_public_ip_on_launch = true
 
   enable_dns_hostnames = true
