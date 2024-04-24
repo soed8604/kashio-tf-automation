@@ -15,6 +15,7 @@ pipeline {
                 sh '''
                     cd Kashio-cluster-EKS/app.votacion.2
                     ls -la
+                    cat jenkisfile
                 '''
             }
         }
