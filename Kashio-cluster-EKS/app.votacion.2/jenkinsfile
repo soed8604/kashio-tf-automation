@@ -10,27 +10,23 @@ pipeline {
 
     stages {
         stage('Checkout') {
-            steps {
-                sh ''' git clone https://github.com/soed8604/kashio-tf-automation.git
-                cd Kashio-cluster-EKS
-                ls -la
+          steps {
+                // Clonar el repositorio Git
+                git branch: 'master', url: 'https://github.com/soed8604/kashio-tf-automation.git'
+                // Ejecutar comandos dentro del directorio clonado
+                sh '''
+                    cd Kashio-cluster-EKS/app.votacion.2
+                    ls -la
                 '''
             }
         }
-
         stage('Deploy to EKS') {
             steps {
                 script {
                     sh 'aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME'
-                    sh 'kubectl apply -f .' // Por ejemplo, tus archivos de configuración de Kubernetes
+                    sh 'kubectl apply -f .' 
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            // Aquí puedes agregar acciones posteriores al despliegue si lo deseas
         }
     }
 }
