@@ -6,7 +6,6 @@ pipeline {
         EKS_CLUSTER_NAME = 'kashio-eks-cluster'
         AWS_CREDENTIALS = credentials('aws_credentials')
     }
-
     stages {
         stage('Checkout') {
             steps {
@@ -32,3 +31,4 @@ pipeline {
         }
     }
 }
+
