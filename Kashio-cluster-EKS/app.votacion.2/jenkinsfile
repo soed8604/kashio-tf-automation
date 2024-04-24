@@ -23,7 +23,7 @@ pipeline {
             steps {
                 script {
                     // Configurar credenciales IAM
-                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: '$AWS_CREDENTIALS', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
+                    withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', credentialsId: 'AWS_CREDENTIALS', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) {
                         sh 'aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME'
                         sh 'kubectl apply -f .'
                     }
