@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script {
                     // Configurar credenciales IAM
-                    withAWS(role: 'arn:aws:iam::ACCOUNT_ID:role/ROLE_NAME') {
+                    withAWS(role: 'arn:aws:iam::654654264692:role/jenkins-eks-role') {
                         sh 'aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME'
                         sh 'kubectl apply -f .'
                     }
