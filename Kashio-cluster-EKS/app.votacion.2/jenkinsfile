@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        AWS_DEFAULT_REGION = 'us-east-1'
+        AWS_REGION = 'us-east-1'
         EKS_CLUSTER_NAME = 'kashio-eks-cluster'
         AWS_CREDENTIALS = credentials('aws_credentials')
     }
@@ -21,19 +21,24 @@ pipeline {
         }
         stage('Deploy to EKS') {
             steps {
-                script {
+                withAWS(credentials: '<AWS_CREDENTIALS>', region: '<AWS_REGION>') {
+                  script {
+                    sh ('aws eks update-kubeconfig --name <EKS_CLUSTER_NAME> --region <AWS_REGION>')
+                    sh "kubectl apply -f ."
+
+                //script {
                     // Configurar credenciales IAM
-                    withAWS(role: 'arn:aws:iam::654654264692:role/jenkins-eks-role') {
-                        sh 'aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME'
-                        sh 'kubectl apply -f postgresdp.yml'
-                        sh 'kubectl apply -f redisdp.yml'
-                        sh 'kubectl apply -f resuldp.yml'
-                        sh 'kubectl apply -f servicepostgres.yml'
-                        sh 'kubectl apply -f serviceredis.yml'
-                        sh 'kubectl apply -f serviceresult.yml'
-                        sh 'kubectl apply -f servicevote.yml'
-                        sh 'kubectl apply -f votedp.yml'
-                        sh 'kubectl apply -f workerdp.yml'
+                    //withAWS(role: 'arn:aws:iam::654654264692:role/jenkins-eks-role') {
+                        //sh 'aws eks --region $AWS_DEFAULT_REGION update-kubeconfig --name $EKS_CLUSTER_NAME'
+                        //sh 'kubectl apply -f postgresdp.yml'
+                        //sh 'kubectl apply -f redisdp.yml'
+                        //sh 'kubectl apply -f resuldp.yml'
+                        //sh 'kubectl apply -f servicepostgres.yml'
+                        //sh 'kubectl apply -f serviceredis.yml'
+                        //sh 'kubectl apply -f serviceresult.yml'
+                        //sh 'kubectl apply -f servicevote.yml'
+                        //sh 'kubectl apply -f votedp.yml'
+                        //sh 'kubectl apply -f workerdp.yml'
                     }
                 }
             }
